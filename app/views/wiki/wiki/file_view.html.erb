@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <%= stylesheet_link_tag    "wiki/application", media: "all" %>
+  <%= stylesheet_link_tag    "wiki/_styles", media: "all" %>
+  <title><%= @title %></title>
+</head>
+<body>
+
+<div id="home_button">
+  <ul class="actions">
+    <li class="minibutton">
+      <a href="<%= base_url %>/" class="action-home-page">Home</a>
+    </li>
+  </ul>
+</div>
+
+<% if @has_results %>
+  <div id="results">
+    <%== @results %>
+  </div>
+<% end %>
+
+<% if @no_results %>
+  <p id="no-results">
+    There are no pages in <strong><%= ref %></strong>.
+  </p>
+<% end %>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wiki</title>
+  <meta name="MobileOptimized" content="width">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="viewport" content="width=device-width">
+  <%= stylesheet_link_tag    "wiki/application", media: "all" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= yield %>
+
+
+<script>
+  var baseUrl = '<%= base_url %>';
+  var uploadDest   = '<%= "upload_dest" %>';
+  <% if false #page %>
+    var pageFullPath = '<%= url_path_display %>';
+  <% end %>
+</script>
+<%= javascript_include_tag "wiki/application" %>
+<%= yield :js %>
+</body>
+</html>
