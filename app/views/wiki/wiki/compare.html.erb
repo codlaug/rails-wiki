@@ -4,7 +4,7 @@
 
   <ul class="actions">
     <li class="minibutton">
-      <%= render :searchbar  %>
+      <%= render 'searchbar'  %>
     </li>
     <li class="minibutton"><a href="<%= base_url %>/<%= escaped_url_path %>"
        class="action-view-page">View Page</a></li>
@@ -17,51 +17,49 @@
   </ul>
 </div>
 
-<% if message %>
-<p><%= message %></p>
-{{/message}}
+<% if @message %>
+<p><%= @message %></p>
+<% end %>
 
 <div id="compare-content">
 
-  {{#show_revert}}
+  <% if show_revert %>
   <ul class="actions">
-    <li class="minibutton"><a href="{{base_url}}/history/{{escaped_url_path}}"
+    <li class="minibutton"><a href="<%= base_url %>/history/<%= escaped_url_path %>"
        class="action-page-history">Back to Page History</a></li>
-    {{#allow_editing}}
+    <% if allow_editing %>
       <li class="minibutton">
-        <form name="gollum-revert" action="{{base_url}}/revert/{{escaped_url_path}}/{{before}}/{{after}}" method="post" id="gollum-revert-form">
+        <form name="gollum-revert" action="<%= base_url %>/revert/<%= escaped_url_path %>/<%= before %>/<%= after %>" method="post" id="gollum-revert-form">
         <a href="#" class="gollum-revert-button">Revert Changes</a>
         </form>
       </li>
-    {{/allow_editing}}
+    <% end %>
   </ul>
-  {{/show_revert}}
+  <% end %>
 
   <div class="data highlight">
     <table cellpadding="0" cellspacing="0">
-      {{#lines}}
+      <% lines.each do |line| %>
         <tr>
-          <td class="line_numbers">{{ldln}}</td>
-          <td class="line_numbers">{{rdln}}</td>
+          <td class="line_numbers"><%= line[:ldln] %></td>
+          <td class="line_numbers"><%= line[:rdln] %></td>
           <td>
-            <pre><div class="{{class}}">{{line}}</div></pre>
+            <pre><div class="<%= line[:class] %>"><%= line[:line] %></div></pre>
           </td>
         </tr>
-      {{/lines}}
+      <% end %>
     </table>
   </div>
 </div>
 <div id="footer">
   <ul class="actions">
-    <li class="minibutton"><a href="{{base_url}}/history/{{escaped_url_path}}"
+    <li class="minibutton"><a href="<%= base_url %>/history/<%= escaped_url_path %>"
        class="action-page-history">Back to Page History</a></li>
-    {{#show_revert}}
-    {{#allow_editing}}
+    <% if show_revert and allow_editing %>
       <li class="minibutton">
         <a href="#" class="gollum-revert-button">Revert Changes</a>
       </li>
-    {{/allow_editing}}
-    {{/show_revert}}
+    <% end %>
     <li class="minibutton"><a href="#">Back to Top</a></li>
   </ul>
 </div>

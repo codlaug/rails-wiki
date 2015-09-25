@@ -172,9 +172,9 @@ module Wiki
       @file     = encodeURIComponent(params[:file])
       @versions = params[:versions] || []
       if @versions.size < 2
-        redirect_to("/history/#{@file}")
+        redirect_to("/wiki/history/#{@file}")
       else
-        redirect_to("/compare/%s/%s...%s" % [
+        redirect_to("/wiki/compare/%s/%s/%s" % [
             @file,
             @versions.last,
             @versions.first]
@@ -183,6 +183,9 @@ module Wiki
     end
 
     def compare
+      path = params[:path]
+      start_version = params[:sha1]
+      end_version = params[:sha2]
       wikip     = wiki_page(path)
       @path     = wikip.path
       @name     = wikip.name
@@ -193,6 +196,8 @@ module Wiki
       @diff     = diffs.first
       render :compare
     end
+
+
 
 
     private
