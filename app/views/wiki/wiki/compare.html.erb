@@ -1,24 +1,24 @@
 <div id="wiki-wrapper" class="compare">
 <div id="head">
-  <h1>History for <strong>{{path}}</strong></h1>
+  <h1>History for <strong><%= path %></strong></h1>
 
   <ul class="actions">
     <li class="minibutton">
-      {{>searchbar}}
+      <%= render :searchbar  %>
     </li>
-    <li class="minibutton"><a href="{{base_url}}/{{escaped_url_path}}"
+    <li class="minibutton"><a href="<%= base_url %>/<%= escaped_url_path %>"
        class="action-view-page">View Page</a></li>
-    {{#allow_editing}}
-      <li class="minibutton"><a href="{{base_url}}/edit/{{escaped_url_path}}"
+    <% if allow_editing %>
+      <li class="minibutton"><a href="<%= base_url %>/edit/<%= escaped_url_path %>"
          class="action-edit-page">Edit Page</a></li>
-    {{/allow_editing}}
-    <li class="minibutton"><a href="{{base_url}}/history/{{escaped_url_path}}"
+    <% end %>
+    <li class="minibutton"><a href="<%= base_url %>/history/<%= escaped_url_path %>"
        class="action-page-history">Page History</a></li>
   </ul>
 </div>
 
-{{#message}}
-<p>{{message}}</p>
+<% if message %>
+<p><%= message %></p>
 {{/message}}
 
 <div id="compare-content">

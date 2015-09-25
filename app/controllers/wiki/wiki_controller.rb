@@ -35,7 +35,7 @@ module Wiki
       else
         not_found unless @allow_editing
         page_path = [path, name].compact.join('/')
-        redirect_to("/create/#{clean_url(encodeURIComponent(page_path))}")
+        redirect_to("/wiki/create/#{clean_url(encodeURIComponent(page_path))}")
       end
     end
 
@@ -151,7 +151,47 @@ module Wiki
       update_wiki_page(wiki, page.sidebar, params[:sidebar], commit) if params[:sidebar]
       committer.commit
 
-      redirect_to("#{page.escaped_url_path}") unless page.nil?
+      redirect_to("/wiki/#{page.escaped_url_path}") unless page.nil?
+    end
+
+
+    def history
+      @page     = wiki_page(params[:name]).page
+      @page_num = [params[:page].to_i, 1].max
+      unless @page.nil?
+        @versions = @page.versions :page => @page_num
+        render :history
+      else
+        redirect_to("/")
+      end
+    end
+
+
+    # this should not be a post
+    def comparePOST
+      @file     = encodeURIComponent(params[:file])
+      @versions = params[:versions] || []
+      if @versions.size < 2
+        redirect_to("/history/#{@file}")
+      else
+        redirect_to("/compare/%s/%s...%s" % [
+            @file,
+            @versions.last,
+            @versions.first]
+                 )
+      end
+    end
+
+    def compare
+      wikip     = wiki_page(path)
+      @path     = wikip.path
+      @name     = wikip.name
+      @versions = [start_version, end_version]
+      wiki      = wikip.wiki
+      @page     = wikip.page
+      diffs     = wiki.repo.diff(@versions.first, @versions.last, @page.path)
+      @diff     = diffs.first
+      render :compare
     end
 
 

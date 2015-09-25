@@ -1,11 +1,14 @@
 Wiki::Engine.routes.draw do
   
-  get  'edit/*name',   to: 'wiki#edit'
-  get  'fileview',     to: 'wiki#fileview'
-  get  '*name',        to: 'wiki#show_page_or_file'
-  get  'create/*name', to: 'wiki#new'
-  post 'create',       to: 'wiki#create'
-  post 'edit/*name',   to: 'wiki#update'
+  get  'edit/*name',    to: 'wiki#edit'
+  get  'fileview',      to: 'wiki#fileview'
+  get  'create/*name',  to: 'wiki#new'
+  post 'create',        to: 'wiki#create'
+  post 'edit/*name',    to: 'wiki#update'
+  get  'history/*name', to: 'wiki#history'
+  post 'compare/*file', to: 'wiki#comparePOST'
+  get  'compare/*path/*sha1..*sha2', to: 'wiki#compare'
+  get  '*name',         to: 'wiki#show_page_or_file'
 
   root 'wiki#root'
 
